@@ -1,0 +1,244 @@
+{% extends 'user/base.html' %}
+{% block content %}
+{% load static from staticfiles %}
+{% if error %}
+{% include '404_search.html' %}
+{% else %}
+<style>
+    /* .container {
+        max-width: 85%;
+        display: flex;
+        justify-content: space-between;
+
+    } */
+    .header{
+        text-align:center;
+    }
+    .filter {
+        padding-top: 1em;
+        padding-bottom: 5em;
+        text-align: center;
+    }
+    .btn-gradient {
+        position: relative;
+        transform: translate (-50%, -50%);
+        width: 200px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        color: #fff;
+        font-size: 20px;
+        text-decoration: none !important;
+        text-decoration-style: none;
+        box-sizing: border-box;
+        background: #17252A;
+        padding: 14px 40px;
+        background-size: 400%;
+        border-radius: 30px;
+    }
+    .wrapper {
+        height: 600px;
+        width: 100%;
+        border: 2px solid black;
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .button-wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .carousel {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        display: flex;
+        position: absolute;
+        left: 0;
+        transition: all 1s ease;
+    }
+
+    .card_carousal {
+        background: #17252a;
+        min-width: 450px;
+        height: 600px;
+        margin-right: 1rem;
+        display: inline-block;
+        color: white;
+    }
+
+    #buy {
+        background: #3AAFA9;
+        color: black;
+    }
+
+    #issue {
+        background: #17252a;
+        color: white;
+    }
+    /* .link1{
+        background-image: url("");
+    } */
+</style>
+</head>
+<div class="header">
+        <h1 class='title text-align-center'>Past Transactions </h1>
+        </div>
+        <div class='filter'>
+            <h3>Filter by:</h3>
+            <br>
+            <a href='{% url "history"%}' class='btn-gradient'>Show All</a>
+            <a href='{% url "filter_history" choice_id=0 %}' class='btn-gradient'>Last Five Transactions</a>
+            <a href='{% url "filter_history" choice_id=1 %}' class='btn-gradient'>Only Issued Books</a>
+            <a href='{% url "filter_history" choice_id=2 %}' class='btn-gradient'>Only Purchased Books</a>
+        </div>
+</div>
+<div class="one">
+    <div class="wrapper mb-5">
+            <button data-action="slideLeft1" style="left:0 ;position: absolute; z-index:1 ;margin-top:300px;"><i
+                class="fa fa-caret-left"></i></button>
+        <button data-action="slideRight1" style="right:0; position: absolute; z-index: 1; margin-top: 300px;"><i
+                class="fa fa-caret-right"></i></button>
+        <ul class="carousel" data-target="carousel1">
+            {% for d in data.values %}
+            <li class="card_carousal" data-target="card1">
+                <div class="card-dark align-items-center" style="text-align: center;">
+                    <div class="card-body">
+                        <p class="card-title"><strong><h4></h4>Transaction Id : #{{ d.tid }}</strong> </p>
+                        <p class="card-title"><strong>Type Of transaction : {{ d.issuing_buying }}</strong></p>
+                        <p class="card-text"><strong>Transaction Timestamp  : {{ d.started_at }}</strong> </p>
+                        <p class="card-text">
+                            {% if d.issuing_buying == 'Buying' %}
+                            <table class="table" style="color:white">
+                                <thead>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Cost</th>
+                                    <th scope="col">Image</th>
+                                </thead>
+                                <tbody>
+                                    {% for b in d.books.values %}
+                                    {% with 'images/books/'|add:b.name|add:'.png' as image_path %}
+                                    <tr scope="row">
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ b.name }}</td>
+                                        <td>{{ b.quantity }}</td>
+                                        <td>{{ b.cost }}</td>
+                                        <td><img src="{% static image_path %}" alt="Book Image" height="40px" width="40px"></td>
+                                    </tr>
+                                    {% endwith %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        <p class="card-text">Total : ₹{{ d.total }}</p>
+                            {% else %}
+                                <table class="table" style="color:white;">
+                                    <thead>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Issued At</th>
+                                        <th scope="col">Returned At </th>
+                                        <th scope="col">Image </th>
+                                    </thead>
+                                    <tbody>
+                                        {% for b in d.books.values %}
+                                        <tr scope="row">
+                                                {% with 'images/books/'|add:b.name|add:'.png' as image_path %}
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ b.name }}</td>
+                                                    <td>{{ d.started_at }}</td>
+                                                    <td>{{ d.return_date }}</td>
+                                                    <td><img src="{% static image_path %}" alt="Book Image" height="40px" width="40px"></td>
+                                                {% endwith %}
+                                                                   
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<script>
+        $("#one")
+        {
+            const carousel = document.querySelector("[data-target='carousel1']");
+            const card = carousel.querySelector("[data-target='card1']");
+            const leftButton = document.querySelector("[data-action='slideLeft1']");
+            const rightButton = document.querySelector("[data-action='slideRight1']");
+        
+            // Prepare to limit the direction in which the carousel can slide, 
+            // and to control how much the carousel advances by each time.
+            // In order to slide the carousel so that only three cards are perfectly visible each time,
+            // you need to know the carousel width, and the margin placed on a given card in the carousel
+            const carouselWidth = carousel.offsetWidth;
+            const cardStyle = card.currentStyle || window.getComputedStyle(card)
+            const cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0]);
+        
+            // Count the number of total cards you have
+            const cardCount = carousel.querySelectorAll("[data-target='card']").length;
+        
+            // Define an offset property to dynamically update by clicking the button controls
+            // as well as a maxX property so the carousel knows when to stop at the upper limit
+            let offset = 0;
+            const maxX = -((cardCount / 3) * carouselWidth +
+                (cardMarginRight * (cardCount / 3)) -
+                carouselWidth - cardMarginRight);
+        
+        
+            // Add the click events
+            leftButton.addEventListener("click", function () {
+                if (offset !== 0) {
+                    offset += carouselWidth + cardMarginRight;
+                    carousel.style.transform = `translateX(${offset}px)`;
+                }
+            })
+        
+            rightButton.addEventListener("click", function () {
+                if (offset !== maxX) {
+                    offset -= carouselWidth + cardMarginRight;
+                    carousel.style.transform = `translateX(${offset}px)`;
+                }
+            })
+        }
+            // Select the carousel you'll need to manipulate and the buttons you'll add events to
+        </script>
+    
+<!-- <div class="wrapper mb-4">
+        <button data-action="slideLeft" style="left:0 ;position: absolute; z-index:1 ;margin-top:180px;"><i
+            class="fa fa-caret-left"></i></button>
+    <button data-action="slideRight" style="right:0; position: absolute; z-index: 1; margin-top: 180px;"><i
+            class="fa fa-caret-right"></i></button>
+        <ul class="carousel" data-target="carousel1">
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+            <li class="card_carousal" data-target="card1">1</li>
+        </ul>
+</div> -->
+
+{% endif %}
+{% endblock %}

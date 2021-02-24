@@ -1,0 +1,131 @@
+{% extends "admin/admin_base.html" %}
+{% block content %}
+<style>
+    .pad {
+        padding-left: 15px !important;
+    }
+
+    #table_ {
+        padding-bottom: 15px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .btn:hover {
+        transform: scale(1.02);
+    }
+
+    .btn {
+        margin-right: 10%;
+    }
+
+    .card {
+        background-color: #FEffff;
+    }
+
+    .table {
+        background-color: #FEffff;
+        color: black;
+    }
+</style>
+<div class="container-fluid">
+
+
+    <div class="row pad">
+        <div class="col-md-12" id="main-head">
+            <h5>DASHBOARD</h5>
+        </div>
+    </div>
+    <div class="row mt-4 pad">
+        <div class="col-md-3">
+            <div class="card dash-box">
+                <h2><i class="fas fa-user"></i> {{ u_count }} </h2>
+                <h2>Users </h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dash-box">
+                <h2><i class="fas fa-book"></i> {{ b_count }} </h2>
+                <h2>Books </h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dash-box">
+                <h2><i class="fas fa-book-reader"></i> {{ t_count }} </h2>
+                <h2> Books Issued </h2>
+            </div>
+        </div>
+        <div class="col-md-3" style="padding-right: 15px !important;">
+            <div class="card dash-box">
+                <h2><i class="fas fa-book"></i> {{ n_count }} </h2>
+                <h2>Books Sold </h2>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- </div>   -->
+    </div>
+    <div class="row pad">
+        <div class="col-md-12" id="main-head">
+            <h5>Today's Dues</h5>
+        </div>
+    </div>
+    <div class="row pad" id="table_">
+        <table class="table table-light table-hover">
+            <thead>
+                <tr>
+                    <th>Transaction Id</th>
+                    <th>User Id</th>
+                    <th>Date Borrow</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rows in today %}
+                <tr>
+                    {% for r in rows %}
+                    <td>{{ r }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row pad">
+        <div class="col-md-12" id="main-head">
+            <h5>Requests</h5>
+        </div>
+    </div>
+    <div class="row pad" id="requests">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th scope="col">Request_id</th>
+                    <th scope="col">Request for</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Time Stamp</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in info %}
+                <tr>
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                    <td>
+                        <form action="request_admin" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-xs" style="background-color: forestgreen;" id="approve" type="submit"
+                                value="{{ row.0 }}" name="accept">Accept <i class="fa fa-check-circle"></i></button>
+                            <button class="btn btn-xs btn-danger" id="decline" type="submit" value="{{ row.0 }}"
+                                name="decline">Decline <i class="fa fa-times-circle"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

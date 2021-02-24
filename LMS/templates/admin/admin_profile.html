@@ -1,0 +1,188 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+
+<style>
+    /* body {
+        background-color: #3aafa9;
+    } */
+
+    .card-header {
+        background-color: #17252a;
+    }
+
+    .card-header h3 {
+        color: white;
+    }
+
+    .card {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        max-width: 75% !important;
+    }
+
+    .row {
+        padding-top: 30px;
+        margin-bottom: 0px;
+    }
+
+    .control-label .text-info {
+        display: inline-block;
+    }
+
+    #SaveButton {
+        max-width: 20%;
+        align-self: center;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Profile</h3>
+        </div>
+        <div class="card-body">
+
+            <form action="update_profile" method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <!-- <div class="form-group"> -->
+                        <label for="FirstName" class="col-form-label">
+                            <h5>Name :</h5>
+                        </label>
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-sm-7">
+                        <!-- <label for="name" class="control-label"><p class="text-info">Jatin</p><i class="icon-star"></i></label> -->
+                        <input type="text" class="form-control" name="name" id="input1" placeholder="First Name" value="{{ name }}" disabled>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="controls">
+                            <button type="button" class="btn btn-dark" id="edit" onclick="enable1()"><i
+                                    class="fa fa-edit"></i> Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <!-- <div class="form-group"> -->
+                        <label for="InputEmail" class="col-form-label">
+                            <h5>Email address : </h5>
+                        </label>
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="email" name="email" class="form-control input-all" id="input3" aria-describedby="emailHelp"
+                            placeholder="Email" value="{{ email }}" disabled>
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-dark" onclick="enable3()"><i class="fa fa-edit"></i>
+                            Edit</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <!-- <div class="form-group"> -->
+                        <label for="InputPassword" class="col-form-label">
+                            <h5>Password : </h5>
+                        </label>
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="password" name="password" class="form-control input-all" id="input4" placeholder="Password" value="{{ password }}"
+                            disabled>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-dark" onclick="enable4()"><i class="fa fa-edit"></i>
+                            Edit</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <!-- <div class="form-group"> -->
+                        <label for="InputPassword" class="col-form-label">
+                            <h5>Phone : </h5>
+                        </label>
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="tel" class="form-control input-all" name="phone" id="input5" placeholder="1234567891" value="{{ phone }}" disabled>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-dark" onclick="enable5()"><i class="fa fa-edit"></i>
+                            Edit</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <!-- <div class="form-group"> -->
+                        <label for="LastName" class="col-form-label">
+                            <h5>Address : </h5>
+                        </label>
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control input-all" name="address" placeholder="Address" id="input6" value="{{ address }}" disabled>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-dark" onclick="enable6()"><i class="fa fa-edit"></i>
+                            Edit</button>
+                    </div>
+                </div>
+            </div>
+            <a  href="update_profile" style="margin-left: auto;margin-right: auto;"><button type="submit" class="btn btn-dark" style="margin-bottom:20% ;">Save Changes</button></a>
+        </div>
+            </form>
+</div>
+<script>
+    // $('#edit').click(function() {
+    //   var text = $('.text-info').text();
+    //   var input = $('<input id="attribute" type="text" value="' + text + '" />')
+    //   $('.text-info').text('').append(input);
+    //   input.select();
+
+    //   input.blur(function() {
+    //     var text = $('#attribute').val();
+    //     $('#attribute').parent().text(text);
+    //     $('#attribute').remove();
+    //   });
+    //  });
+    // var button = document.getElementsByClassName("btn-all");
+    // var input = document.getElementsByClassName("input-all");
+    function enable1() {
+        document.getElementById("input1").disabled = false;
+    }
+    function enable2() {
+        document.getElementById("input2").disabled = false;
+    }
+    function enable3() {
+        document.getElementById("input3").disabled = false;
+    }
+    function enable4() {
+        document.getElementById("input4").disabled = false;
+    }
+    function enable5() {
+        document.getElementById("input5").disabled = false;
+    }
+    function enable6() {
+        document.getElementById("input6").disabled = false;
+    }
+    function save() {
+        document.getElementById("input1").disabled = true;
+        document.getElementById("input2").disabled = true;
+        document.getElementById("input3").disabled = true;
+        document.getElementById("input4").disabled = true;
+        document.getElementById("input5").disabled = true;
+        document.getElementById("input6").disabled = true;
+    }
+
+</script>
+
+{% endblock %}

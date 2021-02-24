@@ -1,0 +1,18 @@
+<style>
+    #search_bar{
+        width:90%;
+        display: inline-block;
+    }
+    #search_button{
+        display: inline-flex;
+        background: #17252a;
+        color: white;
+    }
+</style>
+<div class="container container-fluid col-md-8 align-items-center text-center mb-5">
+        <form action="{% url 'search_by_search_bar' %}" class="form-inline"  method="POST">
+                {% csrf_token %}
+                <input class="form-control mr-sm-2" id="search_bar" type="search" placeholder="Search for books by their book name Eg: Harry Potter " aria-label="Search" name="search_bar">
+                <button class="btn" type="submit" id="search_button"><i class="fa fa-search"></i></button>
+              </form>
+</div>

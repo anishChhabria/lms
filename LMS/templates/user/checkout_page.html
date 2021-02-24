@@ -1,0 +1,110 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<style>
+    .container1{
+        background: white;
+        margin:auto;
+        width: 90%;
+    }
+    body{
+        text-align: center;
+    }
+    #checkout{
+        width:100%;
+        background:  #17252a;
+        color: white;
+        border-radius: 10px;
+        border: none;
+    }
+</style>
+{% if request.session.cart_count == 0 %}
+{% include '404_search.html' %}
+{% else %}
+<div class="container1 container-fluid mb-4 align-text-center" style="padding: 10px;">
+        <h1>Welcome to Checkout </h1>
+</div>
+{% if request.session.cart.buying_count == 0 %}
+{% else %}
+<div class="container1 container-fluid align-text-center">
+    <h3>Books Bought</h3>
+    <div class="table-responsive mb-5">
+        <table class="table">
+            <thead>
+                <th scope="col">Name Of the Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Cost</th>
+                <th scope="col"></th>
+            </thead>
+            <tbody>
+                {% for x in request.session.cart.values %}
+                {% if x.issuing_buying == 'Buying' %}
+                <tr scope="row">
+                    <td>
+                        {{ x.name }}
+                    </td>
+                    <td>
+                        {{ x.current_quantity }}
+                    </td>
+                    <td>
+                        {{ x.individual_total }}
+                    </td>
+                    <td>
+                        <a href="delete_element/{{ x.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                <tr scope="row">
+                    <td></td>
+                    <td></td>
+                    <td>Total : </td>
+                    <td>{{ computed_cost }}</td>
+                </tr>
+            </tbody>
+            {% endif %}
+        </table>
+
+    </div>
+</div>
+<div class="container1 container-fluid align-text-center">
+        {% if request.session.cart.issuing_count != 0 %}
+        <h3>Books Issued </h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <th scope="col">Name Of the Product</th>
+                    <th scope="col">Issued At</th>
+                    <th scope="col">Due At </th>
+                    <th scope="col"></th>
+                </thead>
+                <tbody>
+                    {% for x in request.session.cart.values %}
+                    {% if x.issuing_buying == "Issuing" %}
+                    <tr scope="row">
+                        <td>
+                            {{ x.name }}
+                        </td>
+                        <td>
+                            {{ x.issued_at }}
+                        </td>
+                        <td>
+                            {{ x.return_date }}
+                        </td>
+                        <td>
+                            <a href="delete_element/{{ x.id }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+    
+        </div>
+    </div>
+</div>
+    <div class="mt-4 col-md-4 mb-5 align-items-center" style="margin:auto;">
+        <a href="{% url 'payment_portal' %}"><button  id="checkout">Proceed to Payment&nbsp;<i class="fa fa-credit-card"></i> </button></a>
+    </div>
+{% endif  %}
+{% endblock %}

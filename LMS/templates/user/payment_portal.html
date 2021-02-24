@@ -1,0 +1,86 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<style>
+    .container{
+        background: white;
+        text-align :center;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    .row{
+        text-align: center;
+    }
+    .btns{
+        background:  #17252a;
+        color: white;
+        border:none;
+        border-radius: 5px;
+        padding: 10px;
+    }
+</style>
+<div class="container container-fluid col-md-5 mb-5 align-text-center">
+    <h2>Welcome to LMS Payment Portal <i class="fa fa-credit-card"></i></h2>
+</div>
+
+<div class="container container-fluid mb-5">
+    <h3>Online Payment</h3>
+    <div class="row">
+        <div class="column col-md-6">
+            <h4>Wallet <i class="fa fa-paypal"></i></h4><hr>
+            <form action="{% url 'commit_transaction' choice_id=0 %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group mt-2 mb-5">
+                    <label for="exampleFormControlSelect1">Select type of wallet</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                    <option selected>Select a Wallet Eg: Paytm</option>
+                    <option>Paytm</option>
+                    <option>PayPal</option>
+                    <option>Google Pay</option>
+                    </select>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="mobile_number">Enter Registered Phone Number</label>
+                    <input class="form-control" type="number" name="mobile_number" id="" placeholder="Eg: +91 123456789">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btns" id="wallet">Complete Payment </button>
+                </div>
+            </form>
+        </div>
+        <div class="column col-md-6">
+            <h4>Credit/ Debit Card <i class="fa fa-cc-mastercard"></i></h4>
+            <hr>
+            <form action="{% url 'commit_transaction' choice_id=1 %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group mt-2 mb-5">
+                    <label for="card_number">Enter Card Number</label>
+                    <input class="form-control" type="number" name="card_number" id="" placeholder="Eg: 1234556789">
+                </div>
+                <div class="form-group mt-2 mb-4">
+                    <div class="row">
+                    <div class="column" style="padding-right: 25px;">
+                            <label for="cvv">Enter your cvv</label>
+                            <input type="number" name="cvv" id="" class="form-control" placeholder="Eg: 123">        
+                    </div>
+                    <div class="column " style="padding-left: 10px;">   
+                            <label for="expiry">Expiry Date</label>
+                            <input type="date" name="expiry" id="" class="form-control">
+                    </div>
+                    </div>
+                </div>
+                <button type="submit" class="btns">Complete Payment <i class="fa fa-cc-mastercard"></i></button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <h3>Or</h3>
+    <hr>
+    <h3>Offline Payment</h3>
+        <p>Pay the pertaining amount in Cash to the Librarian or mail the admin at <em>admin-LMS@ves.ac.in</em></p>
+        <form action="{% url 'commit_transaction' choice_id=2 %}" method="POST">
+            {% csrf_token %}
+        <button type="submit" class="btns mt-2 mb-2">Complete Payment <i class="fa fa-money"></i></button>
+        </form>
+</div>
+{% endblock %}

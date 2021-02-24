@@ -1,0 +1,59 @@
+{% extends 'user/base.html' %}
+{% block content %}
+{% load static from staticfiles %}
+<style>
+    .card{
+        background-color:white;
+        border-radius: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .card-title{
+        background: white;
+    }
+</style>
+<div class="container container-fluid align-self-center">
+    <div class="card mb-5 d-flex align-items-center" style="margin:auto;max-width: 18rem;">
+        <h2 class="card-title">Contact Us</h2>
+    </div>
+    <div class="card mb-5 d-flex align-items-center" style="margin:auto;max-width: 30rem;">
+            <p>
+                <br>
+                <i class="fa fa-envelope"></i> <b>Email us At : </b>libraryportal@ves.ac.in<br><br>
+                <i class="fa fa-phone"></i> <b>Contact Number: </b> 1234567890, Ayesha Gulrajani<br><br>
+                <i class="fa fa-map-pin"></i> <b>Address: </b>VES HOSTEL, Chembur<br><br>
+            </p>
+        </div>
+    <div class="card-columns">
+        <div class="card">
+            <img src="{% static 'images/ayesha.jpg' %}" alt="Ayesha Gulrajani" class="card-img-top mb-0" >
+            <div class="card-body">
+                <h4 class="card-title">Ayesha Gulrajani</h4>
+                <p class="card-text">UX Designer</p>
+                <p class="card-text">DB Design</p>
+                <a href="https://github.com/ayeshagulrajani" class="btn" style="text-decoration: none;background-color:#17252a;color:white">Check Out Github <i class="fa fa-github" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="card">
+                <img src="{% static 'images/jatin.png' %}" alt="Jatin Acharya" class="card-img-top">
+                <div class="card-body">
+                    <h4 class="card-title">Jatin Acharya</h4>
+                    <p class="card-text">UX Designer</p>
+                    <p class="card-text">DB Design</p>
+                    <a href="https://github.com/JatinAcharya" class="btn" style="text-decoration: none;background-color:#17252a;color:white">Check Out Github <i class="fa fa-github" aria-hidden="true"></i></a>
+                </div>
+        </div>
+        <div class="card">
+                <img src="{% static 'images/jay.png'%}" alt="Jay Bendre" class="card-img-top" >
+                <div class="card-body">
+                    <h4 class="card-title">Jay Bendre</h4>
+                    <p class="card-text">DB Design</p>
+                    <p class="card-text">Integration and Implementation</p>
+                    <a href="https://github.com/jaydbendre" class="btn" style="text-decoration: none;background-color:#17252a;color:white">Check Out Github <i class="fa fa-github" aria-hidden="true"></i></a>
+                </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

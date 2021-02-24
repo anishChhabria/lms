@@ -1,0 +1,209 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui. 
+css"> 
+  <link rel="stylesheet" href="/resources/demos/style.css"> 
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+  <script> 
+  $( function() {
+    var tags = [
+        {% for i in data.values %}
+        "{{ i.name }}",
+        {% endfor %}
+        ];
+    $( "#tags" ).autocomplete({ 
+      source: tags   
+    }); 
+  } ); 
+  </script>  -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    $(function() {
+        $("#min_slider").slider({
+              value: 0,
+              min: 0,
+              max: 10000,
+              step: 100,
+              slide: function(event, ui ){
+                $("#min").html($("min_slider").value);
+              }
+          });
+    });
+      
+  </script>
+<style>
+    #search_button{
+        background-color: #17252a;
+        color: white; 
+    }
+    #advanced_search{
+        background-color: #17252a;
+        color: white; 
+    }
+    
+    #search{
+        width: 100%;
+    }
+    .card{
+        width: 15em
+    }
+    .slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+</style>
+<form action="search_by_search_bar" method="post">
+<div class="container">
+    {% if error  %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+</div>
+<div class="container">
+    {% if request.session.search_error  %}
+        <div class="alert alert-danger">{{ request.session.search_error }}</div>
+    {% endif %}
+</div>
+<div class="container">
+<div class="input-group md-form form-sm form-2 pl-0 mb-5">
+        {% csrf_token %}
+        <input class="form-control my-0 py-1 red-border" type="search" placeholder="Search" aria-label="Search" id="tags" name="search_bar">
+        <div class="input-group-append">
+          <button class="btn" type="submit" id="search_button"><i class="fa fa-search text-grey" aria-hidden="true"></i></button>
+        </div>
+    </form>
+</div>
+
+<div class="mr-auto text-center mb-5">
+    <h1> Or..</h1>
+    <hr>
+    <h3> Search Using Filters</h3>
+</div>
+    
+<form action="search_by_filter" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="input-group mb-3 mr-auto">
+            <div class="col-lg-4">
+                    <div class="card text-center">
+                        <h3 class="card-title">Genre</h3>
+                    </div>
+            </div>
+            <div class="col-lg-8 ">
+                    <select name="genre" id="inputGroupSelect02" class="custom-select">
+                            <option selected>Choose one</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Comic Book">Comic Book</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Science">Science</option>
+                            <option value="Textbook">Textbook</option>
+                    </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+            <div class="input-group mb-3 mr-auto">
+                <div class="col-lg-4">
+                    <div class="card text-center">
+                        <h3 class="card-title">Author</h3>
+                    </div>
+                </div>
+                <div class="col-lg-8 ">
+                        <select name="author" id="inputGroupSelect02" class="custom-select">
+                                <option selected>Choose one</option>
+                                {% for d in data.values %}
+                                <option value="{{ d.author }}">{{ d.author }}</option>
+                                {% endfor %}
+                        </select>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                    <div class="input-group mb-3 mr-auto">
+                        <div class="col-lg-4">
+                                <div class="card text-center">
+                                    <h3 class="card-title">Book name</h3>
+                                </div>
+                        </div>
+                        <div class="col-lg-8 ">
+                                <select name="name" id="inputGroupSelect02" class="custom-select">
+                                        <option selected>Choose one</option>
+                                        {% for d in data.values %}
+                                        <option value="{{ d.name }}">{{ d.name }}</option>
+                                        {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                        <div class="input-group mb-3 mr-auto">
+                            <div class="col-lg-4">
+                                    <div class="card text-center">
+                                        <h3 class="card-title">Price Range</h3>
+                                    </div>
+                            </div>
+                            <div class="col-lg-8 ">
+                                    <div data-role="main" class="ui-content">
+                                              <div data-role="rangeslider">
+                                                <label for="price-min">Price:</label>
+                                                <input type="range" name="price-min" id="slider_min" value="0" min="0" max="10000" class="slider">
+                                                <p></p>
+                                                <label for="price-max">Price:</label>
+                                                <input type="range" name="price-max" id="slider_max" value="800" min="1000" max="10000" class="slider">
+                                                <p>₹<span id="min"></span> - ₹<span id="max"></span></p>
+                                            </div>
+                                    </div>           
+                         </div>
+                    </div>
+                </div>
+                 -->
+                    <!-- <div class="row">
+                            <div class="input-group mb-3 mr-auto">
+                                <div class="col-lg-4">
+                                        <div class="card text-center">
+                                            <h3 class="card-title">Condition</h3>
+                                        </div>
+                                </div>
+                                <div class="col-lg-8 ">
+                                        <select name="" id="inputGroupSelect02" class="custom-select">
+                                                <option selected>Choose one</option>
+                                                <option value="1"></option>
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"> -->
+                        <div class="container container-fluid align-items-center col-md-4 mr-auto">
+                        <button class="btn mb-5" type="submit" id="advanced_search"><i class="fa fa-search"></i>&nbsp;Explore more </button>
+                    </div>
+    </form>
+</div>
+{% endblock %}

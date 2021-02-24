@@ -1,0 +1,354 @@
+{% extends 'user/base.html' %}
+{% load static from staticfiles %}
+
+{% block content %}
+{% if request.session.status %}
+<div class="alert alert-success">{{ request.session.status }}</div>
+{% endif %}
+{% include 'user/searchbar.html' %}
+<div class="container container-fluid col-md-4 text-center mb-2" style="overflow: auto;">
+    <p>
+        <h2>Welcome Back , {{ request.session.username }}</h2>
+    </p>
+</div>
+<link rel="stylesheet" href="{% static 'css/user_dashboard.css' %}">
+<style>
+    .wrapper {
+        height: 450px;
+        width: 100%;
+        border: 2px solid black;
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .button-wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .carousel {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        display: flex;
+        position: absolute;
+        left: 0;
+        transition: all 1s ease;
+    }
+
+    .card_carousal {
+        background: black;
+        min-width: 200px;
+        height: 450px;
+        margin-right: 1rem;
+        display: inline-block;
+        color: white;
+    }
+
+    #buy {
+        background: #3AAFA9;
+        color: black;
+    }
+
+    #issue {
+        background: #17252a;
+        color: white;
+    }
+
+    /* The Modal (background) */
+    .modal1 {
+        display: block;
+        /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /*Modal Header*/
+    .modal-header1 {
+        background-color: #17252a;
+        padding: 20px;
+        color: white;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .modal-header1 h2,
+    .modal-footer1 h2 {
+        margin: 0;
+    }
+
+    /* Modal Header End */
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #f4f4f4;
+        border: 1px solid #888;
+        margin: 10% auto;
+        width: 45%;
+        height: 55%;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+        animation-name: modalopen;
+        animation-duration: 1.2s;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    /* Modal Content End */
+    /*Modal Footer*/
+    .modal-footer1 {
+        background-color: #3AAFA9;
+        padding: 20px;
+        color: black;
+        text-align: center;
+        display: inline;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    /* Modal footer End */
+    /*close button*/
+    .close_ {
+        color: white;
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .close_:hover,
+    .close_:focus {
+        color: #f4f4f4;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    /* .table_row{
+        padding: 50px;
+    } */
+    @keyframes modalopen {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+</head>
+<div>
+    <h1>&nbsp;&nbsp;&nbsp;Bestsellers</h1>
+    <div class="wrapper mb-5">
+        <button data-action="slideLeft" style="left:0 ;position: absolute; z-index:1 ;margin-top:180px;"><i
+                class="fa fa-caret-left"></i></button>
+        <button data-action="slideRight" style="right:0; position: absolute; z-index: 1; margin-top: 180px;"><i
+                class="fa fa-caret-right"></i></button>
+        <ul class="carousel" data-target="carousel">
+            {% for v in books.values %}
+            <!--<p>{% static 'images/books/{{ v.bid }}.png' %}</p> -->
+            {% with 'images/books/'|add:v.name|add:'.png' as image_path %}
+            <!-- <a href="/individual_book/{{ v.bid }}" class="stretched-link"> -->
+            <li class="card_carousal" data-target="card">
+                <!-- <p>{{ image_path }}</p> -->
+                <div class="card-dark align-items-center">
+                    <img src="{% static image_path %}" alt="Book Image" class="card-img-top" height="200px" />
+                    <div class="card-body" style="text-align: center;">
+                        <p class="card-text">Name : {{ v.name|title }}<br>Cost : ₹{{ v.cost }}<br>Author :
+                            {{ v.author|title }}</p>
+                        <a href="/individual_book/{{ v.bid }}" class="btn mb-2" id="issue"><i class="fa fa-eye"></i>
+                            View The Book</a>
+                    </div>
+                </div>
+            </li>
+            </a>
+            {% endwith %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% if request.session.visit == 1%}
+    <div id="myModal" class="modal1">
+        <!-- Modal content  -->
+        <div class="modal-content">
+            <div class="modal-header1">
+                <span class="close_">&times;</span>
+                <h2>Issued Books</h2>
+
+            </div>
+            <div class="modal-body1">
+                <table class="table table-sm">
+                    <tr class="table_row">
+                        <th>Book Name</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Days Left</th>
+                    </tr>
+                    <tr>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>14</td>
+                    </tr>
+                    <tr>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>14</td>
+                    </tr>
+
+                </table>
+            <!-- <div class="flex-container">
+                        <div class="book1" id="book1">
+                            <div class="card" id="card1">
+                                <div class="front">
+                                    <img src="{% static 'images/ayesha.jpg' %}" alt="book1" width="250px" height="250px" id="book1">
+                                </div>
+                                <div class="back">
+                                    <p><strong>Name : </strong>XYZ</p>
+                                    <p><strong>Issue-Date : </strong>01-01-2019</p>
+                                </div>
+                            </div>
+                            <div class="progress progress-1" role="progressbar" aria-valuenow="30" aria-valuemin="0"
+                                aria-valuemax="30">
+                                <div class="progress-bar" style="width:50%;; background-color: #17252A; ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book2" id="book2">
+                            <div class="card" id="card2">
+                                <div class="front">
+                                    <img src="{% static 'images/ayesha.jpg' %}" alt="book2" width="250px" height="250px" id="book2">
+                                </div>
+                                <div class="back">
+                                    <p><strong>Name : </strong>XYZ</p>
+                                    <p><strong>Issue-Date : </strong>01-01-2019</p>
+                                </div>
+                            </div>
+                            <div class="progress progress-2" role="progressbar" aria-valuenow="30" aria-valuemin="0"
+                                aria-valuemax="30">
+                                <div class="progress-bar" style="width: 50%;; background-color: #17252A;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>  -->
+
+
+        </div>
+    </div>
+</div>
+{% endif %}
+</div>
+<!-- <h2>Modal</h2> -->
+<!-- <button id="myBtn" onclick="first()">Open Modal</button> -->
+<!-- The Modal -->
+<script>
+    // Select the carousel you'll need to manipulate and the buttons you'll add events to
+    const carousel = document.querySelector("[data-target='carousel']");
+    const card = carousel.querySelector("[data-target='card']");
+    const leftButton = document.querySelector("[data-action='slideLeft']");
+    const rightButton = document.querySelector("[data-action='slideRight']");
+
+    // Prepare to limit the direction in which the carousel can slide, 
+    // and to control how much the carousel advances by each time.
+    // In order to slide the carousel so that only three cards are perfectly visible each time,
+    // you need to know the carousel width, and the margin placed on a given card in the carousel
+    const carouselWidth = carousel.offsetWidth;
+    const cardStyle = card.currentStyle || window.getComputedStyle(card)
+    const cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0]);
+
+    // Count the number of total cards you have
+    const cardCount = carousel.querySelectorAll("[data-target='card']").length;
+
+    // Define an offset property to dynamically update by clicking the button controls
+    // as well as a maxX property so the carousel knows when to stop at the upper limit
+    let offset = 0;
+    const maxX = -((cardCount / 3) * carouselWidth +
+        (cardMarginRight * (cardCount / 3)) -
+        carouselWidth - cardMarginRight);
+
+
+    // Add the click events
+    leftButton.addEventListener("click", function () {
+        if (offset !== 0) {
+            offset += carouselWidth + cardMarginRight;
+            carousel.style.transform = `translateX(${offset}px)`;
+        }
+    })
+
+    rightButton.addEventListener("click", function () {
+        if (offset !== maxX) {
+            offset -= carouselWidth + cardMarginRight;
+            carousel.style.transform = `translateX(${offset}px)`;
+        }
+    })
+</script>
+<script>
+    var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close_")[0];
+
+// When the user clicks on the button, open the modal 
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+//If only one book is issued or 2 or none
+var book1 = document.getElementById("book1");
+var book2 = document.getElementById("book2");
+var progressbar1 = document.getElementById("progressbar1");
+var progressbar2 = document.getElementById("progressbar2");
+var number_issued_books = 2;
+if (number_issued_books == 0) {
+    modal.style.display = 'none';
+}
+else if (number_issued_books == 1) {
+    book2.style.display = "none";
+    progressbar2.style.display = "none";
+}
+
+</script>
+{% endblock %}

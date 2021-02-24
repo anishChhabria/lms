@@ -1,0 +1,157 @@
+{% extends "midadmin/midadmin_base.html" %}
+{% block content %}
+
+<style>
+    .pad {
+        padding-left: 15px !important;
+    }
+
+    #table_ {
+        padding-bottom: 15px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row pad">
+        <div class="col-md-12" id="main-head">
+            <h5>DASHBOARD</h5>
+        </div>
+    </div>
+    <div class="row mt-4 pad">
+        <div class="col-md-3">
+            <div class="card dash-box">
+                <h2><i class="fas fa-user"></i> {{ u_count }} </h2>
+                <h2>Users </h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dash-box">
+                <h2><i class="fas fa-book"></i> {{ b_count }} </h2>
+                <h2>Books </h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dash-box">
+                <h2><i class="fas fa-book-reader"></i> {{ t_count }} </h2>
+                <h2> Books Issued </h2>
+            </div>
+        </div>
+        <div class="col-md-3" style="padding-right: 15px !important;">
+            <div class="card dash-box">
+                <h2><i class="fas fa-book"></i> {{ n_count }} </h2>
+                <h2>Books Sold </h2>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- </div>   -->
+    </div>
+    <!-- <div class="row pad">
+        <div class="col-md-12" id="main-head">
+            <h5>Today's Dues</h5>
+        </div>
+    </div>
+    <div class="row pad" id="table_">
+        <table class="table table-light table-hover">
+            <thead>
+                <tr>
+                    <th>Book Name</th>
+                    <th>Borrower</th>
+                    <th>Date Borrow</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Some Book</td>
+                    <td>Jatin acharya</td>
+                    <td>29/07/2019</td>
+                    <td>2017.jatin.acharya@ves.ac.in</td>
+                </tr>
+                <tr>
+                    <td>Some Book</td>
+                    <td>Jatin acharya</td>
+                    <td>29/07/2019</td>
+                    <td>2017.jatin.acharya@ves.ac.in</td>
+                </tr>
+                <tr>
+                    <td>Some Book</td>
+                    <td>Jatin acharya</td>
+                    <td>29/07/2019</td>
+                    <td>2017.jatin.acharya@ves.ac.in</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+    <div class="row pad">
+        <div class="col-md-12" id="main-head">
+            <h5>Out of stock Books : </h5>
+        </div>
+    </div>
+    <div class="row pad" id="table_">
+        <table class="table" style="background-color: #f4f4f4;">
+            <thead>
+                <tr>
+                    <th scope="col">Book Id</th>
+                    <th scope="col">Book Name</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in book %}
+                <tr>
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="row pad">
+        <div class="col-md-12" id="main-head">
+            <h5> Requested Books : </h5>
+        </div>
+    </div>
+    <div class="row pad">
+        <table class="table" style="background-color: #f4f4f4;">
+            <thead>
+                <tr>
+                    <th scope="col">Request Id</th>
+                    <th scope="col">Request For</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">TimeStamp</th>
+                    <th scope="col">Status</th>
+                    <!-- <th scope="col">User Id</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in info %} {% if row.4 == 0 %}
+                <tr style="color: inherit; font-weight:600;">
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                </tr>
+                {% endif %} {% if row.4 == 1 %}
+                <tr style="color: forestgreen;font-weight:600;">
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                </tr>
+                {% endif %} {% if row.4 == 2 %}
+                <tr style="color: red;font-weight: 600;">
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                </tr>
+                {% endif %} {% endfor %}
+            </tbody>
+        </table>
+    </div>   
+</div>
+
+{% endblock %}

@@ -1,0 +1,376 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin</title>
+
+    <!-- <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"> -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/admin_view.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<style>
+    html {
+        font-size: 14px;
+
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-backdrop {
+        display: none !important;
+    }
+
+    /*Modal Header*/
+    .modal-header {
+        background-color: #17252A;
+        padding: 20px;
+        color: #FEFFFF;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .modal-header h2,
+    .modal-footer h2 {
+        margin: 0;
+    }
+
+    /* Modal Header End */
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #f4f4f4;
+        border: 1px solid #888;
+        margin: 10% auto;
+        width: 50%;
+        height: 57%;
+        font-weight: 500;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+        animation-name: modalopen;
+        animation-duration: 1.2s;
+    }
+    
+
+    /* Modal Content End */
+    /*close button*/
+    .closebase {
+        color: #FEFFFF;
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .closebase:hover,
+    .closebase:focus {
+        color: #f3f3f3;
+        text-decoration: none;
+        cursor: pointer;
+        transform: scale(1.01);
+    }
+
+    .subimit_button {
+        background-color: #17252A;
+        color: #FEFFFF;
+        margin-top: 20px;
+        margin-left: 40%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .subimit_button:hover {
+        transform: scale(1.05);
+        color: #FEFFFF;
+    }
+
+    .row {
+        margin-bottom: 2%;
+    }
+
+    .logout {
+        color: #FEFFFF;
+    }
+
+    .logout:visited {
+        color: #FEFFFF;
+    }
+
+    .logout:hover {
+        color: #FEFFFF;
+        text-decoration: none;
+    }
+    
+    .custom:hover {
+        color: black;
+        background-color: #f4f4f4;
+        border: none;
+    }
+
+    @keyframes modalopen {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /*Modal Ends*/
+</style>
+
+<body style="background-color: #3AAFA9;">
+
+    <div class="d-flex" id="wrapper">
+        <div class="border-right" id="sidebar-wrapper" style="background-color: #17252A;">
+            <div class="sidebar-heading">
+                <a class="navbar-brand" href="admin_dashboard">
+                    <h3><i class="fas fa-book-open"></i> Library</h3>
+                </a>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="admin_dashboard" class="list-group-item list-group-item-action sidebar_nav"><i
+                        class="fa fa-cog"></i> Dashboard</a>
+                <a href="admin_profile" class="list-group-item list-group-item-action sidebar_nav"><i
+                        class="fas fa-user-cog"></i> Profile</a>
+                <button style="text-align: left; padding: 0; background-color: inherit; border: none;" id="bookBtn">
+                    <a href="#" class="list-group-item list-group-item-action sidebar_nav" data-toggle="modal"
+                        data-target="#bookModal"><i class="fas fa-book"></i> Add a Book</a></button>
+                <!-- <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-table"></i> Tables</a> -->
+                <a class="list-group-item collapsed sidebar_nav" href="#" id="sidebar" data-toggle="collapse"
+                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i
+                        class="fas fa-table"></i> Tables</a>
+                <div id="collapseOne" class="collapse navbar-collapse" aria-labelledby="headingTwo">
+                    <div class="collapse-inner">
+                        <a class="collapse-item list-group-item sidebar_nav" href="admin_users"><i
+                                class="fas fa-user"></i>
+                            Users</a>
+                        <a class="collapse-item list-group-item sidebar_nav" href="admin_books"><i
+                                class="fas fa-book"></i> Books</a>
+                        <a class="collapse-item list-group-item sidebar_nav" href="admin_transactions"><i
+                                class="fas fa-angle-double-right "></i> Transactions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-md border-bottom" style="background-color: #17252A;">
+                <button class="btn shadow-none custom" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item logout">
+                            <a class="nav-link logout" href="log_out"><i class="fas fa-sign-out-alt"></i></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            {% block content %}
+            <!-- <h1>hi</h1> -->
+            {% endblock %}
+        </div>
+
+    </div>
+    <!-- /#page-content-wrapper -->
+    <!-- <h2>Modal</h2> -->
+    <!-- <button id="myBtn" onclick="first()">Open Modal</button> -->
+    <!-- The Modal -->
+    <div id="bookModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Book</h2>
+                    <span class="closebase">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form action="add_book" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-4" style="padding-right: 0px; color: #222222 !important;">
+                                <label for="bid" style="font-size: 25px;">Book Id :</label>
+                            </div>
+                            <div class="col-md-8" style="padding-left: 0px;">
+                                <!-- <input type="text" style="word-break: break-word;" name="description" height="25" width="10" >   -->
+                                <input type="number" name="bid" required>
+                            </div>
+                            <!-- <button type="submit" class="btn subimit_button">Add Request</button> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-right: 0px; color: #222222 !important;">
+                                <label for="bname" style="font-size: 25px;">Book Name :</label>
+                            </div>
+                            <div class="col-md-8" style="padding-left: 0px;">
+                                <!-- <input type="text" style="word-break: break-word;" name="description" height="25" width="10" >   -->
+                                <input type="text" name="bname" required>
+                            </div>
+                            <!-- <button type="submit" class="btn subimit_button">Add Request</button> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-right: 0px; color: #222222 !important;">
+                                <label for="author" style="font-size: 25px;">Author :</label>
+                            </div>
+                            <div class="col-md-8" style="padding-left: 0px;">
+                                <!-- <input type="text" style="word-break: break-word;" name="description" height="25" width="10" >   -->
+                                <input type="text" name="author" required>
+                            </div>
+                            <!-- <button type="submit" class="btn subimit_button">Add Request</button> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-right: 0px; color: #222222 !important;">
+                                <label for="genre" style="font-size: 25px;">Genre :</label>
+                            </div>
+                            <div class="col-md-8" style="padding-left: 0px;">
+                                <!-- <input type="text" style="word-break: break-word;" name="description" height="25" width="10" >   -->
+                                <input type="text" name="genre" required>
+                            </div>
+                            <!-- <button type="submit" class="btn subimit_button">Add Request</button> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-right: 0px; color: #222222 !important;">
+                                <label for="cost" style="font-size: 25px;">Cost :</label>
+                            </div>
+                            <div class="col-md-8" style="padding-left: 0px;">
+                                <!-- <input type="text" style="word-break: break-word;" name="description" height="25" width="10" >   -->
+                                <input type="number" name="cost" required>
+                            </div>
+                            <!-- <button type="submit" class="btn subimit_button">Add Request</button> -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-right: 0px; color: #222222 !important;">
+                                <label for="quantity" style="font-size: 25px;">Quantity :</label>
+                            </div>
+                            <div class="col-md-8" style="padding-left: 0px;">
+                                <!-- <input type="text" style="word-break: break-word;" name="description" height="25" width="10" >   -->
+                                <input type="number" name="quantity" required>
+                            </div>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn subimit_button">Add Book</button>
+                    </div>
+                </div>
+                <!-- <label for="bid"> Book Id : </label>
+                    <input type="number" name="bid" required>
+                    <label for="bname">Book Name : </label>
+                    <input type="text" name="bname" required>
+                    <label for="author">Author : </label>
+                    <input type="text" name="author" required>
+                    <label for="genre">Genre : </label>
+                    <input type="text" name="genre" required>
+                    <label for="cost">Cost : </label>
+                    <input type="number" name="cost" required>
+                    <label for="quantity">Quantity : </label>
+                    <input type="number" name="quantity" required> -->
+                </form>
+                <!-- <div class="flex-container">
+          <div class="progress-1" id="progressbar1">
+            <progress max="31" value="15"></progress>
+          </div>
+          <div class="progress-2" id="progressbar2">
+            <progress max="31" value="15"></progress>
+          </div> 
+        </div>      -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /#wrapper -->
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("bookModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("bookBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("closebase")[0];
+
+        // When the user clicks on the button, open the modal 
+        btn.onclick = function () {
+            console.log("basemodal")
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        //If only one book is issued or 2 or none
+        // var book1 = document.getElementById("book1");
+        // var book2 = document.getElementById("book2");
+        // var progressbar1 = document.getElementById("progressbar1");
+        // var progressbar2 = document.getElementById("progressbar2");
+        // var number_issued_books = 2;
+        // if (number_issued_books == 0) {
+        //     modal.style.display = 'none';
+        // }
+        // else if (number_issued_books == 1) {
+        //     book2.style.display = "none";
+        //     progressbar2.style.display = "none";
+        // }</script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/admin_view.js' %}"></script>
+
+    <!-- Menu Toggle Script -->
+    <!-- <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script> -->
+    <!-- <script src="{% static 'js/jquery.min.js' %}"></script> -->
+    <!-- <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> -->
+    <!-- <script src="{% static 'js/admin_view.js' %}"></script> -->
+</body>
+
+</html>

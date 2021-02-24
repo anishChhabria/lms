@@ -1,0 +1,69 @@
+{% extends 'user/base.html' %}
+{% load static from staticfiles %}
+{% block content %}
+<style>
+        .container {
+            background-color: #f4f4f4;
+        }
+
+        .row {
+            margin-top: 5%;
+            border: 1px solid #17252A;
+        }
+
+        .col-md-4 {
+            text-align: center;
+        }
+
+        .book_img {
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .book_des {
+            margin-top: 5%;
+        }
+
+        .book_custom {
+            padding-top: 5%;
+        }
+
+        .issue,
+        .buy {
+            width: 10vw;
+            background-color: #17252A;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        .issue:hover,
+        .buy:hover {
+            transform: scale(1.05);
+            background-color: #2e505c;
+        }
+    </style>
+<div class="container container-fluid">
+<div class="row">
+        {% with 'images/books/'|add:data.name|add:'.png' as image_path %}
+        <div class="col-md-4">
+            <img src="{% static image_path %}" alt="book name" class="book_img" width="100%" height="90%">
+        </div>
+        <div class="col-md-8" style="border-radius: 10px;">
+            <div class="book_des">
+                <h1>Book Name</h1>
+                <h3 class="book_custom">Book name : {{ data.name }}</h3>
+                <h3 class="book_custom">Author : {{ data.author }}</h3>
+                <h3 class="book_custom">Genre : {{ data.genre }}</h3>
+                <h3 class="book_custom" style="margin-bottom: 10%;">Cost : ₹&nbsp;{{ data.cost }}</h3>
+                <div style="display: flex; justify-content: space-evenly; margin-bottom: 5%;">
+                    <a href="/add_elements_to_cart/{{ data.id }}/1"><button class="btn issue"> Issue</button></a>
+                    <a href="/add_elements_to_cart/{{ data.id }}/0"><button class="btn buy"> Buy </button></a>
+                </div>
+
+            </div>
+        </div>
+        {% endwith %}
+    </div>
+    </div>
+{% endblock %}

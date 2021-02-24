@@ -1,0 +1,225 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<style>
+    .table_custom {
+        padding-bottom: 15px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .delete_button {
+        margin-left: 0px;
+    }
+
+    .custom_td {
+        padding-left: 0px !important;
+    }
+
+    #add_user {
+        padding-top: 10px;
+    }
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /*Modal Header*/
+    .modal-header {
+        background-color: #17252A;
+        padding: 20px;
+        color: #FEFFFF;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .modal-header h2,
+    .modal-footer h2 {
+        margin: 0;
+    }
+
+    /* Modal Header End */
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #f4f4f4;
+        border: 1px solid #888;
+        margin: 10% auto;
+        width: 40%;
+        height: 50%;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+        animation-name: modalopen;
+        animation-duration: 1.2s;
+    }
+
+    /* Modal Content End */
+
+    /*close button*/
+    .closeuser {
+        color: #FEFFFF;
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .closeuser:hover,
+    .closeuser:focus {
+        color: #FEFFFF;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .subimit_button {
+        background-color: #17252A;
+        color: #FEFFFF;
+        margin-left: 40%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .subimit_button:hover {
+        transform: scale(1.05);
+        color: #FEFFFF;
+    }
+    .custom_add{
+        background-color: #17252A;
+        color: #FEFFFF;
+    }
+    .custom_add:hover{
+        color: #FEFFFF;
+        transform: scale(1.05);
+    }
+    @keyframes modalopen {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /*Modal Ends*/
+</style>
+<div class="container-fluid">
+    <div class="row" style="margin-bottom: 0;">
+        <div class="col-md-10" id="main-head">
+            <h4 style="margin-bottom: 0px;">ALL USERS</h4>
+        </div>
+        <div class="col-md-2" id="add_user">
+            <button class="btn custom_add" id="userbtn"><i class="fas fa-user-plus"> ADD
+                    USER</i></button>
+        </div>
+    </div>
+
+    <div class="row table_custom">
+        <table class="table table-light table-hover ">
+            <thead>
+                <tr>
+                    <th width="10%">User_id</th>
+                    <th width="15%">Email</th>
+                    <th width="10%">Password</th>
+                    <th width="10%">Balance</th>
+                    <th width="30%">Details</th>
+                    <th width="10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table %}
+                <tr>
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                    <!-- <td><<form action="admin_users">><button class="btn btn-danger" {% for r in row %} name="{{r}}" {% endfor %} type="submit"><i class="fa fa-trash-alt"></i> Delete</button></form></td>             -->
+                    <td><a href="{% url 'Admin:delete_user' row.0 %}"><button class="btn btn-danger" name=""
+                                type="submit"><i class="fa fa-trash-alt"></i> Delete</button></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- <h2>Modal</h2> -->
+<!-- <button id="myBtn" onclick="first()">Open Modal</button> -->
+<!-- The Modal -->
+
+<div id="usermodal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add User</h2>
+            <span class="closeuser">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form action="admin_users" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="user_id">User-Id : </label>
+                    <input type="number" class="form-control" name="user_id" placeholder="100" width="70%" required>
+                </div>
+                <div class="form-group">
+                    <label for="user_email">Email address : </label>
+                    <input type="email" class="form-control" name="user_email" aria-describedby="emailHelp"
+                        placeholder="pqr1@abc.com" required>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="exampleInputPassword1" >Password : </label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" width="70%" required>
+                </div> -->
+                <button type="submit" class="btn subimit_button">Add USER</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var usermodal = document.getElementById("usermodal");
+        // Get the button that opens the modal
+        var userbtn = document.getElementById("userbtn");
+        // Get the <span> element that closes the modal
+        var userspan = document.getElementsByClassName("closeuser")[0];
+
+        //When the user clicks on the button, open the modal 
+        userbtn.onclick = function () {
+            console.log("hihihi")
+            usermodal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        userspan.onclick = function () {
+            usermodal.style.display = "none";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == usermodal) {
+                usermodal.style.display = "none";
+            }
+        }
+//If only one book is issued or 2 or none
+//var book1 = document.getElementById("book1");
+//var book2 = document.getElementById("book2");
+//var progressbar1 = document.getElementById("progressbar1");
+//var progressbar2 = document.getElementById("progressbar2");
+//var number_issued_books = 2;
+//if(number_issued_books == 0){
+//  modal.style.display = 'none';
+//}
+//else if(number_issued_books == 1){
+//  book2.style.display = "none";
+//  progressbar2.style.display = "none";
+//}
+    </script>
+
+
+    {% endblock %}

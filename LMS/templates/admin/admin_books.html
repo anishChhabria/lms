@@ -1,0 +1,288 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<style>
+    .table_custom {
+        padding-bottom: 15px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .delete_button {
+        margin-left: 0px;
+    }
+
+    .custom_td {
+        padding-left: 0px !important;
+    }
+
+    #add_user {
+        padding-top: 10px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /*Modal Header*/
+    .modal-header {
+        background-color: #17252A;
+        padding: 20px;
+        color: #FEFFFF;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .modal-header h2,
+    .modal-footer h2 {
+        margin: 0;
+    }
+
+    /* Modal Header End */
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #f4f4f4;
+        border: 1px solid #888;
+        margin: 10% auto;
+        width: 50%;
+        height: 100%;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+        animation-name: modalopen;
+        animation-duration: 1.2s;
+    }
+
+    /* Modal Content End */
+
+    /*close button*/
+    .close {
+        color: #FEFFFF;
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #FEFFFF;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .subimit_button {
+        background-color: #17252A;
+        color: #FEFFFF;
+        margin-left: 40%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .subimit_button:hover {
+        transform: scale(1.05);
+        color: #FEFFFF;
+    }
+
+    @keyframes modalopen {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /*Modal Ends*/
+</style>
+
+<div class="container-fluid">
+    <div class="row" style="margin-bottom: 0;">
+        <div class="col-md-10" id="main-head">
+            <h5>ALL BOOKS</h5>
+        </div>
+        <div class="col-md-2" id="add_user">
+            <button class="btn btn-primary" id="myBtn" onclick="first()"><i class="fas fa-user-plus"> ADD
+                    BOOK</i></button>
+        </div>
+    </div>
+
+    <div class="row table_custom">
+        <table class="table table-light table-hover ">
+            <thead>
+                <tr>
+                    <th width="10%">Book_id</th>
+                    <th width="20%">Book Name</th>
+                    <th width="20%">Author</th>
+                    <th width="15%">Genre</th>
+                    <th width="10%">Cost</th>
+                    <th width="15%">Quantity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table %}
+                <tr>
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                    <td><a href="{% url 'Admin:delete_book' row.0 %}"><button class="btn btn-danger" name=""
+                                type="submit"><i class="fa fa-trash-alt"></i> Delete</button></a></td>
+                    <!-- <td><button class="btn btn-danger" name="" onclick="second()" id="delete_btn"><i class="fa fa-trash-alt"></i> Delete</button></td> -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- <h2>Modal</h2> -->
+    <!-- <button id="myBtn" onclick="first()">Open Modal</button> -->
+    <!-- The Modal -->
+    <div id="bookmodal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Books</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form action="admin_books" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="book_id">Book-Id : </label>
+                        <input type="number" class="form-control" name="book_id" placeholder="100" width="70%" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="book_name">Book Name : </label>
+                        <input type="text" class="form-control" name="book_name" placeholder="100" width="70%" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author : </label>
+                        <input type="text" class="form-control" name="author" placeholder="100" width="70%" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="genre">Genre : </label>
+                        <input type="text" class="form-control" name="genre" placeholder="100" width="70%" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cost">Cost : </label>
+                        <input type="number" class="form-control" name="cost" placeholder="100" width="70%" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity : </label>
+                        <input type="number" class="form-control" name="quantity" placeholder="100" width="70%"
+                            required>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="exampleInputPassword1" >Password : </label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" width="70%" required>
+                    </div> -->
+                    <button type="submit" class="btn subimit_button">Add Book</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <h2>Modal</h2> -->
+<!-- <button id="myBtn" onclick="first()">Open Modal</button> -->
+<!-- The Modal -->
+<!-- <div id="delmodal" class="modal">
+     Modal content 
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Delete</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form action="admin_books" method="POST">
+                {% csrf_token %}
+                {% for row in table %}
+                <h3>Are you sure you want to remove the user ?</h3>
+                <a href="{% url 'Admin:delete_book' row.0 %}"><button class="btn btn-primary" > Yes </button></a>
+                <button class="btn btn-danger"> No </button>
+                {% endfor %} -->
+<!-- <div class="form-group">
+                    <label for="book_id">Book-Id : </label>
+                    <input type="number" class="form-control" name="book_id" placeholder="100" width="70%" required>
+                </div>
+                <div class="form-group">
+                    <label for="book_name">Book Name : </label>
+                    <input type="text" class="form-control" name="book_name" placeholder="100" width="70%" required>
+                </div>
+                <div class="form-group">
+                    <label for="author">Author : </label>
+                    <input type="text" class="form-control" name="author" placeholder="100" width="70%" required>
+                </div>
+                <div class="form-group">
+                    <label for="genre">Genre : </label>
+                    <input type="text" class="form-control" name="genre" placeholder="100" width="70%" required>
+                </div>
+                <div class="form-group">
+                    <label for="cost">Cost : </label>
+                    <input type="number" class="form-control" name="cost" placeholder="100" width="70%" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity : </label>
+                    <input type="number" class="form-control" name="quantity" placeholder="100" width="70%" required>
+                </div>
+                 <div class="form-group">
+                        <label for="exampleInputPassword1" >Password : </label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" width="70%" required>
+                    </div> -->
+<!-- <button type="submit" class="btn subimit_button">Add Book</button> --> -->
+<!-- </form>
+        </div>
+    </div>
+</div> -->
+<script>
+    var modal = document.getElementById("bookmodal");
+    var del_modal = document.getElementById("delmodal");
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+    var del_btn = document.getElementById("delete_btn");
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    //When the user clicks on the button, open the modal 
+    btn.onclick = function () {
+        console.log("hi")
+        modal.style.display = "block";
+    }
+    del_btn.onclick = function () {
+        del_modal.style.display = "block"
+    }
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    //If only one book is issued or 2 or none
+    //var book1 = document.getElementById("book1");
+    //var book2 = document.getElementById("book2");
+    //var progressbar1 = document.getElementById("progressbar1");
+    //var progressbar2 = document.getElementById("progressbar2");
+    //var number_issued_books = 2;
+    //if(number_issued_books == 0){
+    //  modal.style.display = 'none';
+    //}
+    //else if(number_issued_books == 1){
+    //  book2.style.display = "none";
+    //  progressbar2.style.display = "none";
+    //}
+</script>
+
+{% endblock %}

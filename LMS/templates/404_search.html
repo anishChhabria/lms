@@ -1,0 +1,12 @@
+{% load static from staticfiles %}
+<div class="container container-fluid mr-auto col-md-4">
+    <h3>No Results Found :(</h3>
+    <p>We are sorry we couldnt find for what you asked </p>
+    <p>Instead Enjoy this Gif instead</p>
+    <p> Sorry for the inconvenience</p>
+    <p> Or </p>
+    <p>Click the Button to explore More </p>
+    <p><a href="{% url 'explore' %}" class="btn mr-auto" style="background:#17252A; color: white; align-self: auto; align-items: center;">Explore More </a></p>
+    <img src="{% static 'images/error_gif.gif' %}" alt="" srcset="" height="400px">
+
+</div> 

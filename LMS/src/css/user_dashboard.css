@@ -1,0 +1,129 @@
+.wrapper {
+    height: 360px;
+    width: 100%;
+    border: 2px solid black;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.button-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    z-index: 1;
+}
+
+.carousel {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    display: flex;
+    position: absolute;
+    left: 0;
+    transition: all 1s ease;
+}
+
+.card_carousal {
+    background: black;
+    min-width: 200px;
+    height: 360px;
+    margin-right: 1rem;
+    display: inline-block;
+    color: white;
+}
+
+#buy{
+    background:#3AAFA9;
+    color: black;
+}
+
+#issue{
+    background: #17252a;
+    color: white;
+}    
+/* The Modal (background) */
+    .modal1 {
+        display: block;
+        /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /*Modal Header*/
+    .modal-header1 {
+        background-color: #3AAFA9;
+        padding: 20px;
+        color: black;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .modal-header1 h2,
+    .modal-footer1 h2 {
+        margin: 0;
+    }
+
+    /* Modal Header End */
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #2B7A78;
+        border: 1px solid #888;
+        margin: 10% auto;
+        width: 45%;
+        height: 55%;
+        box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+        animation-name: modalopen;
+        animation-duration: 1.2s;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    /* Modal Content End */
+    /*Modal Footer*/
+    .modal-footer1 {
+      background-color: #3AAFA9;
+      padding: 20px;
+      color: black;
+      text-align: center;
+      display: inline;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    /* Modal footer End */
+    /*close button*/
+    .close_ {
+      color: black;
+      float: right;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .close_:hover,
+    .close_:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @keyframes modalopen {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }

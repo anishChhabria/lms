@@ -1,0 +1,63 @@
+{% extends 'user/base.html' %}
+{% load static from staticfiles %}
+{% block content %}
+{% if error %}
+{% include '404_search.html' %}
+{% else %}
+<div class="container container-fluid mr-auto">
+    <h2>{{ searched_for }}</h2>
+</div>
+<div class="container container-fluid mr-auto">
+    <h4>{{ number_of_terms }}</h4>
+</div>
+<div id="success"></div>
+<div class="container">
+    <div class="row">
+        {% for key,d in data.items %}
+        {% if d.id %}
+        <div class="column col-md-4" style="padding: 2%;">
+            <div class="card bg-dark text-white">
+                {% with 'images/books/'|add:d.name|add:'.png' as image_path %}
+                <div class="card-body" style="text-align: center !important;">
+                    <img src="{% static image_path %}" alt="Book Image " class="card-img-top mb-2 mt-0"  height="300px">
+                    <p>{{d.name}}<br> By <em>{{d.author}}</em></p>
+                    <p>Buying Cost : ₹{{d.cost}}</p>
+                    <p>Genre : <em>{{d.genre}}</em></p>
+                </div>
+                {% endwith %}
+                <a href="add_elements_to_cart/{{ d.id }}/1"><button type="submit" class="btn btn-md mr-auto mb-2" style=" width: 80%; border-radius: 10px;background: #17252A; color:#f4f4f4; border: solid white 1px;" id="{{ d.id }}"><i class="fa fa-tags"></i>  Issue</button></a>
+                <a href="add_elements_to_cart/{{ d.id }}/0"><button type="submit" class="btn btn-md mr-auto mb-2" style=" width: 80%; border-radius: 10px;background :#3AAFA9; color: black; border: solid #17252A 1px;" id="{{ d.id }}">₹ Buy</button></a>
+        </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<!-- <script>
+    $('#list').on('click', 'button', function(e) 
+    {
+        e.preventDefault();
+        $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+        $.ajax({
+            data: {
+                id : e.target.id,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+            url: "/add-elements-to-cart",
+            type: "POST",
+            success:function()
+            {
+                $("success").html("<div class='alert alert-success'>Element added successfully</div>")
+            }
+        });
+    });
+        
+</script> -->
+{% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<style>
+    .table_custom {
+        padding-bottom: 15px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .delete_button {
+        margin-left: 0px;
+    }
+
+    .custom_td {
+        padding-left: 0px !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" style="margin-bottom:0;">
+        <div class="col-md-10" id="main-head">
+            <h5>ALL TRANSACTIONS</h5>
+        </div>
+    </div>
+
+    <div class="row table_custom">
+        <table class="table table-light table-hover ">
+            <thead>
+                <tr>
+                    <th width="10%">Transaction_id</th>
+                    <th width="10%">User_id</th>
+                    <th width="10%">Type</th>
+                    <th width="15%">Started At</th>
+                    <th width="25%">Details</th>
+                    <th width="15%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table %}
+                <tr>
+                    {% for r in row %}
+                    <td>{{r}}</td>
+                    {% endfor %}
+                    <td><a href="{% url 'Admin:delete_transaction' row.0 %}"><button class="btn btn-danger" name=""
+                                type="submit"><i class="fa fa-trash-alt"></i> Delete</button></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

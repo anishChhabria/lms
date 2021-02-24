@@ -1,0 +1,323 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Mid-Admin</title>
+    <!-- <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"> -->
+    <link href="{% static 'css/admin_view.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        /* The Modal (background) */
+        html {
+            font-size: 14px;
+        }
+
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /*Modal Header*/
+
+        .modal-header {
+            background-color: #17252A;
+            /* padding: 20px; */
+            color: #FEFFFF;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .modal-header h2,
+        .modal-footer h2 {
+            margin: 0;
+        }
+
+        /* Modal Header End */
+        /* Modal Content/Box */
+
+        .modal-content {
+            background-color: #f4f4f4;
+            color: #17252A;
+            font-weight: bold;
+            border: 1px solid #888;
+            margin: 10% auto;
+            box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+            animation-name: modalopen;
+            animation-duration: 1.2s;
+        }
+
+        /* Modal Content End */
+        /*close button*/
+
+        .close {
+            color: #FEFFFF;
+            float: right;
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #FEFFFF;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .subimit_button {
+            background-color: #17252A;
+            color: #FEFFFF;
+            margin-top: 20px;
+            margin-left: 40%;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .subimit_button:hover {
+            transform: scale(1.05);
+            color: #FEFFFF;
+        }
+
+        .toggle_button {
+            background-color: inherit;
+        }
+
+        .toggle_button:hover,
+        .toggle_button:focus,
+        .toggle_button:active {
+            background-color: transparent;
+            color: black;
+            transform: scale(1.05);
+            outline: none;
+        }
+
+        .toggle_button:focus {
+            outline: none;
+        }
+
+        .custom_button {
+            background-color: #17252A;
+            color: #FEFFFF;
+        }
+
+        .logout1 {
+            color: #FEFFFF;
+        }
+
+        .logout1:visited {
+            color: #FEFFFF;
+        }
+
+        .logout1:hover {
+            color: #FEFFFF;
+            text-decoration: none;
+        }
+        .custom{
+            background-color: #FEFFFF;
+            color: #17252A;
+        }
+        .custom:visited{
+            background-color: #FEFFFF;
+            color: #17252A;
+        }
+        .custom:hover {
+            color: black;
+            background-color: #f4f4f4;
+            border: none;
+        }
+        
+        @keyframes modalopen {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+ 
+        /*Modal Ends*/
+    </style>
+</head>
+
+<body style="background-color: #3AAFA9;">
+    <div class="d-flex" id="wrapper">
+        <div class="border-right" id="sidebar-wrapper" style="background-color: #17252A;">
+            <div class="sidebar-heading">
+                <a class="navbar-brand" href="midadmin_dashboard">
+                    <h3><i class="fas fa-book-open"></i> Library</h3>
+                </a>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="midadmin_dashboard" class="list-group-item list-group-item-action sidebar_nav" ><i
+                        class="fa fa-cog"></i> Dashboard</a>
+                <a href="midadmin_profile" class="list-group-item list-group-item-action sidebar_nav"><i
+                        class="fas fa-user-cog"></i> Profile</a>
+                <button class="list-group-item list-group-item-action custom_button shadow-none" type="button"
+                    id="myBtn"><i class="fas fa-book"></i> Request books </button>
+                <!-- <a href="#myModal" class="list-group-item list-group-item-action sidebar_nav"><i
+                        class="fas fa-book" id="book_request"></i> Request books</a> -->
+                <!-- <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-table"></i> Tables</a> -->
+                <!-- <a class="list-group-item collapsed sidebar_nav" href="#" id="sidebar" data-toggle="collapse"
+                    data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"><i
+                        class="fas fa-table"></i> Tables</a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+                    <div class="collapse-inner">
+                        <a class="collapse-item list-group-item sidebar_nav" href="midadmin_users"><i
+                                class="fas fa-user"></i>
+                            Users</a>
+                        <a class="collapse-item list-group-item sidebar_nav" href="midadmin_books"><i
+                                class="fas fa-book"></i> Books</a>
+                        <a class="collapse-item list-group-item sidebar_nav" href="midadmin_transactions"><i
+                                class="fas fa-angle-double-right "></i> Transactions</a>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-md border-bottom" style="background-color: #17252A;">
+                <button class="btn toggle_button custom shadow-none" id="menu-toggle"><i
+                        class="fas fa-bars"></i></button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav ml-auto">
+                        <!-- <li class="nav-item dropdown">
+                            <button class="btn btn-primary shadow-none" id="requests" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false"><i class="fas fa-bell"></i><span
+                                    class="badge">(30)</span></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li> -->
+                        <li class="nav-item ">
+                            <a class="nav-link logout1" href="log_out" style="color: #FEFFFF;"><i class="fas fa-sign-out-alt"></i></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            {% block content %}
+            <!-- <h1>hi</h1> -->
+            {% endblock %}
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2 style="margin-top: 1%;">Add Request</h2>
+                <span class="close">&times;</span>
+
+            </div>
+            <div class="modal-body" style=" height: 100%; width: 100%; padding: 5%;">
+                <form action="book_request" method="POST">
+                    {% csrf_token %}
+                    <div class="row" style="margin-bottom: 15px;">
+                        <div class="col-md-4" style="padding-right: 0px; color: #222222 !important;">
+                            <label for="destination" style="font-size: 25px;">Select Product :</label>
+                        </div>
+
+                        <div class="col-md-8" style="padding-left: 0px;">
+                            <select class="custom-select " style="width:250px; padding-top: 5px;" id="destination"
+                                name="bid">
+                                <option value="0">Select </option>
+                                {% for n in bid %}
+                                {% for i in n %}
+                                <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" style="padding-right: 0px; color: #222222 !important;">
+                            <label for="quantity" style="font-size: 25px;">Quantity :</label>
+                        </div>
+                        <div class="col-md-8" style="padding-left: 0px;">
+                            <input type="number" style="width: 40%;" min="0" name="quantity">
+                            <!-- <input type="text" style="word-break: break-word;" name="description" height="25" width="10" >   -->
+                            <!-- <textarea name="description" cols="45" rows="8"></textarea> -->
+                        </div>
+                        <button type="submit" class="btn subimit_button">Add Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        var modal = document.getElementById("myModal");
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        //When the user clicks on the button, open the modal 
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Bootstrap core JavaScript -->
+    <!-- <script src="{% static 'js/jquery.min.js' %}"></script> -->
+    <!-- <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> -->
+    <script src="{% static 'js/admin_view.js' %}"></script>
+    <!-- Menu Toggle Script -->
+    <!-- <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script> -->
+</body>
+
+
+
+</html>

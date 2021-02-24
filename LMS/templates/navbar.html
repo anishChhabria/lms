@@ -1,0 +1,153 @@
+{% load static from staticfiles %}
+
+<link rel="stylesheet" href="{% static 'css/nav.css' %}">
+<nav class="navbar navbar-expand-md navbar-dark mb-4">
+      <a class="navbar-brand" href="{% url 'dashboard' %}">
+       <img src="{% static 'images/LMS.png' %}" alt="" srcset="" height= "80px" width="80px"> LMS</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'explore' %}">Explore</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact_us' %}" >Contact Us</a>
+          </li> 
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDown" role="button" aria-haspopup="true" data-toggle="dropdown" aria-expanded="false">          
+            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{ request.session.username }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a href="{% url 'profile' %}" class="dropdown-item">Profile</a>
+              <a href="{% url 'history' %}" class="dropdown-item">Previous Transactions</a>
+              <a href="{% url 'log_out' %}" class="dropdown-item">Logout</a>
+            </div>
+          </li>
+          <li class="nav-item" id="shopping_cart">
+            <a href="" class="nav-link" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-shopping-basket"></i><sup>&nbsp;{{ request.session.cart_count }}<sup></a>
+          </li>
+          <li class="nav-item-right">
+          </li>       
+        </ul>
+      </div>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: #17252a;">
+                <h5 class="modal-title" id="exampleModalLabel">Shopping Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body ">
+                    {% if request.session.cart_count == 0 %}
+                    <p style="color: black;"> No Elements Selected</p>
+                    {% else %}
+                    <div id="shoppingCart">
+                        <div class="container container-fluid">
+                          <div class="table-responsive">
+                        <table class="table" id="cart">
+                        {% if request.session.cart_count == 0 %}
+                        <p class="text-danger" id="error">No Elements Found</p>
+                        {% else %}
+      
+                            <thead>
+                                <th scope="col">Product</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Issuing/Buying</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col"></th>
+                            </thead>
+                            <tbody>
+                          {% for r in request.session.cart.values %}
+                        <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.name }}</td>
+                        {% if r.issuing_buying == 'Issuing' %}
+                        <td>{{ r.issuing_buying }}<br>Issued At :  {{ r.issued_at }}</td>
+                        <td>-</td>
+                        <td>-</td>
+                        {% else %}
+                        <td>{{ r.issuing_buying }}</td>
+                        <td>{{ r.current_quantity}}</td>
+                        <td>{{ r.cost }}</td>
+                        {% endif %}
+                        <td><a href="{% url 'delete_element' pid=r.id %}" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+                        {% endfor %}    
+                    </tbody>
+                        </table>
+                        {% endif %}
+                    </div>
+                    </div>
+                    {% endif %}
+                    </div>
+                
+                    <div class="modal-footer" style="background-color: #17252a;">
+                        <a href="{% url 'delete_all_items' %}"><button type="button"class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete All Elements</button></a>
+                        <a href="{% url 'checkout' %}" id="checkout">Checkout</a>
+                      </div>
+                </div>
+              <!-- </div>
+              <div class="modal-body modal-lg" style="width:80%">
+              {% if request.session.cart_count == 0 %}
+              <p style="color: black;"> No Elements Selected</p>
+              {% else %}
+              <div id="shoppingCart">
+                  <div class="container container-fluid">
+                    <div class="table-responsive">
+                  <table class="table" id="cart">
+                  {% if request.session.cart_count == 0 %}
+                  <p class="text-danger" id="error">No Elements Found</p>
+                  {% else %}
+
+                      <thead>
+                          <th scope="col">Product</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Issuing/Buying</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Cost</th>
+                          <th scope="col"></th>
+                      </thead>
+                      <tbody>
+                    {% for r in request.session.cart.values %}
+                  <tr>
+                  <td>{{ r.id }}</td>
+                  <td>{{ r.name }}</td>
+                  {% if r.issuing_buying == 'Issuing' %}
+                  <td>{{ r.issuing_buying }}<br>Issued At :  {{ r.issued_at }}</td>
+                  <td>-</td>
+                  <td>-</td>
+                  {% else %}
+                  <td>{{ r.issuing_buying }}</td>
+                  <td>{{ r.current_quantity}}</td>
+                  <td>{{ r.cost }}</td>
+                  {% endif %}
+                  <td><a href="{% url 'delete_element' pid=r.id %}" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                  </tr>
+                  {% endfor %}    
+              </tbody>
+                  </table>
+                  {% endif %}
+              </div>
+              </div>
+              {% endif %}
+              </div>
+              <div class="modal-footer" style="background-color: #17252a;">
+                <a href="{% url 'delete_all_items' %}"><button type="button"class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete All Elements</button></a>
+                <a href="{% url 'checkout' %}" id="checkout">Checkout</a>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        </div>
+    </nav>
+  
+  

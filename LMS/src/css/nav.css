@@ -1,0 +1,55 @@
+
+.dropdown-menu{
+    background-color: #17252a;
+    border: white solid 0.5px;
+  }
+  .dropdown-item:hover{
+    background-color: #17252a;
+  }
+  .dropdown-menu a{
+    color:white;
+    text-decoration: none;
+  }
+  .dropdown-menu a:hover{
+    color:grey;
+  }
+  .navbar{
+    background-color: #17252a;
+  }
+  .nav{
+    background-color: #17252a;
+  }
+  .nav-link{
+    color:white;
+  }
+  a{
+    text-decoration: none;
+    text-align: center;
+    color: white;
+  }
+  a:hover{
+    color:grey;
+  }
+  .btn.my-2.my-sm-0{
+    color:white;
+  }
+  .modal-content{
+    background:  #17252a;
+    color:white;
+  }
+  .modal-body{
+    background: white;
+  }
+  /* .modal-header{
+    background-color: #17252a;
+  } */
+  #close{
+    color: white;
+  }
+  #checkout{
+    background:#3AAFA9;
+    color:white;
+    padding: 5px;
+    text-decoration: none; 
+    border-radius: 1px;
+  }
